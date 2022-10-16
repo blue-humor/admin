@@ -28,27 +28,17 @@ const Index = () => {
     editRow,
     setEditRow,
     isShowModal,
+    total,
   } = useModel('list', (model) => ({
     handleConfirm: model.handleConfirm,
     handleTableList: model.handleTableList,
-
     isModalVisible: model.isModalVisible,
     setIsModalVisible: model.setIsModalVisible,
     editRow: model.editRow,
     setEditRow: model.setEditRow,
     isShowModal: model.isShowModal,
+    total: model.total,
   }));
-
-  //   const [isModalVisible, setIsModalVisible] = useState(false);
-  //   const [editRow, setEditRow] = useState(null);
-
-  //   const isShowModal = (show, row = null) => {
-  //     console.log(row);
-  //     if (row?.id !== null) {
-  //       setEditRow(row);
-  //     }
-  //     setIsModalVisible(show);
-  //   };
 
   const columns = [
     {
@@ -127,11 +117,9 @@ const Index = () => {
             search={{
               labelWidth: 'auto',
             }}
-            pagination={
-              {
-                // pageSize: 10,
-              }
-            }
+            pagination={{
+              pageSize: 15,
+            }}
             dateFormatter="string"
             // headerTitle="工人进场列表"
             toolBarRender={() => [

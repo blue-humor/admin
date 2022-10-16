@@ -6,6 +6,8 @@ export default () => {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [editRow, setEditRow] = useState(null);
 
+  const [total, setTotal] = useState(0);
+
   const isShowModal = (show, row = null) => {
     console.log(row);
     if (row?.id !== null) {
@@ -25,10 +27,12 @@ export default () => {
   };
 
   const handleTableList = async (params) => {
-    let values = { ...params, pageNum: params.current, pageSize: params.pageSize };
+    let values = { ...params, pageNum: params.current };
     delete values.current;
+    delete values.pageSize;
     const res = await reqTableList(values);
     if (res.code === 200) {
+      setTotal(res.totalSize);
       return {
         data: res.data,
         success: true,
@@ -45,5 +49,7 @@ export default () => {
     editRow,
     setEditRow,
     isShowModal,
+    total,
+    setTotal,
   };
 };
