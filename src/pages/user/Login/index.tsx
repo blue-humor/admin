@@ -82,9 +82,18 @@ const Login: React.FC = () => {
     // }
     // const urlParams = new URL(window.location.href).searchParams;
     if (values.password == 'admin') {
+      sessionStorage.setItem(
+        'admin',
+        JSON.stringify({
+          name: 'admin',
+          avatar: 'https://gw.alipayobjects.com/zos/antfincdn/XAosXuNZyF/BiazfanxmamNRoxxVxka.png',
+          userid: '00000001',
+          email: 'antdesign@alipay.com',
+        }),
+      );
       await fetchUserInfo();
-      history.push('/');
       message.success('登陆成功');
+      history.push('/');
     } else {
       message.error('密码或用户名错误');
     }

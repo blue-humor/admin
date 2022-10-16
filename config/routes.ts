@@ -26,7 +26,7 @@
     routes: [
       {
         path: '/article',
-        redirect: '/article/publish',
+        redirect: '/article/list',
       },
       // {
       //   path: '/article/publish',
@@ -38,7 +38,7 @@
         name: 'list',
         component: './article/list',
       },
-    ], 
+    ],
   },
 
   {

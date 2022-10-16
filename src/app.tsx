@@ -16,14 +16,11 @@ export const initialStateConfig = {
   loading: <PageLoading />,
 };
 
-/**
- * @see  https://umijs.org/zh-CN/plugins/plugin-initial-state
- * */
 export async function getInitialState(): Promise<{
   settings?: Partial<LayoutSettings>;
   currentUser?: API.CurrentUser;
   loading?: boolean;
-  fetchUserInfo?: () => Promise<API.CurrentUser | undefined>;
+  // fetchUserInfo?: () => Promise<API.CurrentUser | undefined>;
 }> {
   const fetchUserInfo = async () => {
     // try {
@@ -33,16 +30,15 @@ export async function getInitialState(): Promise<{
     //   history.push(loginPath);
     // }
     // return undefined;
-     try {
-      // const msg = await queryCurrentUser({
-      //   skipErrorHandler: true,
-      // });
-      return {
-        name: 'Blue',
+    try {
+      const msg = {
+        name: 'admin',
         avatar: 'https://gw.alipayobjects.com/zos/antfincdn/XAosXuNZyF/BiazfanxmamNRoxxVxka.png',
         userid: '00000001',
         email: 'antdesign@alipay.com',
-      }
+      };
+
+      return msg;
     } catch (error) {
       history.push(loginPath);
     }
@@ -50,13 +46,15 @@ export async function getInitialState(): Promise<{
   };
   // 如果不是登录页面，执行
   if (history.location.pathname !== loginPath) {
-   const currentUser=   {
-        name: 'Blue',
-        avatar: 'https://gw.alipayobjects.com/zos/antfincdn/XAosXuNZyF/BiazfanxmamNRoxxVxka.png',
-        userid: '00000001',
-        email: 'antdesign@alipay.com',
-      }
-    // const currentUser = await fetchUserInfo();
+    // const currentUser = {
+    //   name: 'admin',
+    //   avatar: 'https://gw.alipayobjects.com/zos/antfincdn/XAosXuNZyF/BiazfanxmamNRoxxVxka.png',
+    //   userid: '00000001',
+    //   email: 'antdesign@alipay.com',
+    // };
+    const currentUser = await fetchUserInfo();
+    // console.log('currentUser', currentUser);
+
     return {
       fetchUserInfo,
       currentUser,
@@ -75,24 +73,20 @@ export const layout: RunTimeLayoutConfig = ({ initialState, setInitialState }) =
     rightContentRender: () => <RightContent />,
     disableContentMargin: false,
     waterMarkProps: {
-      content: initialState?.currentUser?.name,
+      // content: initialState?.currentUser?.name,
     },
     // footerRender: () => <Footer />,
     onPageChange: () => {
       const { location } = history;
       // 如果没有登录，重定向到 login
-      if (!initialState?.currentUser && location.pathname !== loginPath) {
+      if (!sessionStorage.getItem('admin') && location.pathname !== loginPath) {
         history.push(loginPath);
       }
     },
-    links: isDev
-      ? [
-         
-        ]
-      : [],
+    links: isDev ? [] : [],
     menuHeaderRender: undefined,
-    
-    childrenRender: (children:any, props:any) => {
+
+    childrenRender: (children: any, props: any) => {
       // if (initialState?.loading) return <PageLoading />;
       return (
         <>

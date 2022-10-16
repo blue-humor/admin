@@ -22,6 +22,7 @@ const loginOut = async () => {
   const { redirect } = query;
   // Note: There may be security issues, please note
   if (window.location.pathname !== '/user/login' && !redirect) {
+    sessionStorage.removeItem('admin');
     history.replace({
       pathname: '/user/login',
       search: stringify({
@@ -33,6 +34,8 @@ const loginOut = async () => {
 
 const AvatarDropdown: React.FC<GlobalHeaderRightProps> = ({ menu }) => {
   const { initialState, setInitialState } = useModel('@@initialState');
+
+  // console.log('initialState', currentUser);
 
   const onMenuClick = useCallback(
     (event: MenuInfo) => {
